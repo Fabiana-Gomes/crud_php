@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function (){
         const email = document.getElementById('createEmail').value.trim();
         if(!name || !email){
             alert("Por favor, preencha todos os campos")
-            event.preventDefault();
+            event.preventDefault()
         }
     })
 
