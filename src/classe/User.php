@@ -7,10 +7,10 @@ class User{
         $this->pdo = $pdo;
     }
 
-    public function create($name, $email){
+    public function create($name, $email) {
         $sql = "INSERT INTO users(name, email) VALUES (:name, :email)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['name'=> $name, 'email'=> $email]);
+        return $stmt->execute(['name'=> $name, 'email'=> $email]); 
     }
 
     public function read(){
@@ -25,10 +25,10 @@ class User{
         $stmt->execute(['id' => $id, 'name' => $name, 'email' => $email]);
     }
 
-    public function delete($id){
-        $sql = "DELETE from users WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['id' => $id]);
-    }
+   public function delete($id) {
+    $sql = "DELETE FROM users WHERE id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute(['id' => $id]);
+}
 }
 ?>

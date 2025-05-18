@@ -1,4 +1,5 @@
 <?php
+session_start(); 
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/src/controllers/UserController.php';
 
@@ -26,9 +27,23 @@ $users = $userController->index();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="public/css/style.css">  
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Gerenciador de usuários</title>
 </head>
 <body>
+     <?php if (isset($_SESSION['alert'])): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: '<?= $_SESSION['alert']['type'] ?>',
+                    title: '<?= $_SESSION['alert']['type'] === 'success' ? 'Sucesso!' : 'Erro!' ?>',
+                    text: '<?= $_SESSION['alert']['message'] ?>',
+                    confirmButtonColor: '#3a5ae8'
+                });
+            });
+        </script>
+        <?php unset($_SESSION['alert']); ?>
+    <?php endif; ?>
     <div class="container">
         <header class="header">
             <h1>Gerenciador de usuários</h1>
@@ -64,9 +79,9 @@ $users = $userController->index();
                                         Editar
                                     </button>
                                     <form method="POST" style="display:inline;">
-                                        <input type="hidden" name="id" value="<?= $user['id']?>">
-                                        <button type="submit" name="delete" class="delete-btn">Excluir</button>
-                                    </form>
+                                    <input type="hidden" name="id" value="<?= $user['id']?>">
+                                    <button type="submit" name="delete" class="delete-btn">Excluir</button>
+                                </form>
                                 </div>
                             </td>
                         </tr>
@@ -91,5 +106,20 @@ $users = $userController->index();
     </div>
 
     <script src="public/js/script.js"></script>
+
+ <?php if (isset($_SESSION['alert'])): ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: '<?= $_SESSION['alert']['type'] ?>',
+            title: '<?= $_SESSION['alert']['type'] === 'success' ? 'Sucesso!' : 'Erro!' ?>',
+            text: '<?= $_SESSION['alert']['message'] ?>',
+            confirmButtonColor: '#3a5ae8'
+        });
+    });
+</script>
+<?php unset($_SESSION['alert']); ?>
+<?php endif; ?>
+    
 </body>
 </html>
