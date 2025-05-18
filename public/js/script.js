@@ -60,10 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Encontra o formulário mais próximo e submete
                     const form = e.target.closest('form');
-                    
-                    // Cria um input temporário para garantir o envio
                     const tempInput = document.createElement('input');
                     tempInput.type = 'hidden';
                     tempInput.name = 'delete';

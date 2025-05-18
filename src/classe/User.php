@@ -19,10 +19,11 @@ class User{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function update($id, $name, $email){
-        $sql = "UPDATE users SET name =:name, email = :email WHERE id = :id";
+    public function update($id, $name, $email) {
+        $sql = "UPDATE users SET name = :name, email = :email WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['id' => $id, 'name' => $name, 'email' => $email]);
+        return $stmt->execute(['id' => $id, 'name' => $name, 'email' => $email]);
+        return $stmt->rowCount() > 0;
     }
 
    public function delete($id) {

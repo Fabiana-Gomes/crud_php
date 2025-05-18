@@ -8,7 +8,7 @@ class UserController {
         $this->pdo = $pdo; 
         $this->user = new User($pdo);
     }
-    
+
     // Criar novo usuário
     public function create($name, $email) {
     $checkName = $this->pdo->prepare("SELECT id FROM users WHERE name = :name");
@@ -38,10 +38,23 @@ class UserController {
     }
 
     // Update
-    public function update($id, $name, $email) {
-        return $this->user->update($id, $name, $email);
+  public function update($id, $name, $email) {
+    $checkEmail = $this->pdo->prepare("SELECT id FROM users WHERE email = :email AND id != :id");
+    $checkEmail->execute(['email' => $email, 'id' => $id]);
+    if ($checkEmail->fetch()) {
+        $_SESSION['alert'] = ['type' => 'error','message' => 'Este e-mail já está cadastrado para outro usuário!'
+        ];
+        return false;
+    }$result = $this->user->update($id, $name, $email);
+    if ($result) {
+        $_SESSION['alert'] = ['type' => 'success','message' => 'Usuário atualizado com sucesso!'];
+        return true;
+    } else {
+        $_SESSION['alert'] = ['type' => 'error','message' => 'Nenhuma alteração foi realizada!'
+        ];
+        return false;
     }
-
+}
 
     // Delet
     public function delete($id) {
