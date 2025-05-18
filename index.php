@@ -10,7 +10,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $userController->update($_POST['id'], $_POST['name'], $_POST['email']);
     }elseif(isset($_POST['delete'])){
         $userController->delete($_POST['id']);
-   }     
+        $_SESSION['message'] = 'Usuário removido com sucesso!';
+
+   } echo '<script>window.location.href = window.location.href;</script>';
+    exit(); 
 }
 
 $users = $userController->index();
