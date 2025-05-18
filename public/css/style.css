@@ -202,30 +202,49 @@ tr:last-child td {
 }
 
 /* Responsivo */
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .container {
-    border-radius: 0;
-  }
-  
-  #createForm {
-    flex-direction: column;
-  }
-  
-  #createForm input,
-  #createForm button {
-    width: 100%;
-  }
-  
-  .action-buttons {
-    flex-direction: column;
+    max-width: 95%;
+    border-radius: 10px;
   }
   
   .header h1 {
-    font-size: 1.75rem;
+    font-size: 28px;
   }
   
-  .header h1::after {
-    width: 40px;
-    height: 3px;
+  th, td {
+    padding: 15px;
   }
+  
+  .edit-btn, .delete-btn {
+    padding: 8px 16px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 1200px;
+  }
+  
+  .header h1 {
+    font-size: 32px;
+  }
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; 
+}
+
+.user-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+}
+
+.user-table th, .user-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid #ccc;
 }

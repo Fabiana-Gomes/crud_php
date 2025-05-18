@@ -1,5 +1,5 @@
 <?php
-session_start(); 
+session_start();
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/src/controllers/UserController.php';
 
@@ -22,16 +22,18 @@ $users = $userController->index();
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <META charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="public/css/style.css">  
+    <link rel="stylesheet" href="public/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Gerenciador de usuários</title>
 </head>
+
 <body>
-     <?php if (isset($_SESSION['alert'])): ?>
+    <?php if (isset($_SESSION['alert'])): ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
@@ -67,30 +69,30 @@ $users = $userController->index();
                 <tbody>
                     <?php foreach ($users as $user): ?>
                         <tr>
-                            <td><?= $user['id']?> </td>
-                            <td><?= $user['name']?> </td>
-                            <td><?= $user['email']?> </td>
+                            <td><?= $user['id'] ?> </td>
+                            <td><?= htmlentities($user['name']) ?> </td>
+                            <td><?= htmlentities($user['email']) ?> </td>
                             <td>
                                 <div class="action-buttons">
-                                    <button class="edit-btn" 
-                                            data-id="<?= $user['id']?>" 
-                                            data-name="<?= $user['name']?>" 
-                                            data-email="<?= $user['email']?>">
+                                    <button class="edit-btn"
+                                        data-id="<?= $user['id'] ?>"
+                                        data-name="<?= $user['name'] ?>"
+                                        data-email="<?= $user['email'] ?>">
                                         Editar
                                     </button>
                                     <form method="POST" style="display:inline;">
-                                    <input type="hidden" name="id" value="<?= $user['id']?>">
-                                    <button type="submit" name="delete" class="delete-btn">Excluir</button>
-                                </form>
+                                        <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                        <button type="submit" name="delete" class="delete-btn">Excluir</button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
-                    <?php endforeach ?>              
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>
     </div>
-    
+
     <!-- Modal -->
     <div id="editModal" class="modal">
         <div class="modal-content">
@@ -107,19 +109,20 @@ $users = $userController->index();
 
     <script src="public/js/script.js"></script>
 
- <?php if (isset($_SESSION['alert'])): ?>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            icon: '<?= $_SESSION['alert']['type'] ?>',
-            title: '<?= $_SESSION['alert']['type'] === 'success' ? 'Sucesso!' : 'Erro!' ?>',
-            text: '<?= $_SESSION['alert']['message'] ?>',
-            confirmButtonColor: '#3a5ae8'
-        });
-    });
-</script>
-<?php unset($_SESSION['alert']); ?>
-<?php endif; ?>
-    
+    <?php if (isset($_SESSION['alert'])): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: '<?= $_SESSION['alert']['type'] ?>',
+                    title: '<?= $_SESSION['alert']['type'] === 'success' ? 'Sucesso!' : 'Erro!' ?>',
+                    text: '<?= $_SESSION['alert']['message'] ?>',
+                    confirmButtonColor: '#3a5ae8'
+                });
+            });
+        </script>
+        <?php unset($_SESSION['alert']); ?>
+    <?php endif; ?>
+
 </body>
+
 </html>
