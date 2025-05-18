@@ -8,7 +8,8 @@ class UserController {
         $this->pdo = $pdo; 
         $this->user = new User($pdo);
     }
-
+    
+    // Criar novo usuário
     public function create($name, $email) {
     $checkName = $this->pdo->prepare("SELECT id FROM users WHERE name = :name");
     $checkName->execute(['name' => $name]);
@@ -29,42 +30,35 @@ class UserController {
         $_SESSION['alert'] = ['type' => 'error','message' => 'Erro ao cadastrar usuário!'];
     }
     return $result;
-}
+    }
 
+    // Read
      public function index() {
         return $this->user->read();
     }
 
+    // Update
     public function update($id, $name, $email) {
         return $this->user->update($id, $name, $email);
     }
 
-public function delete($id) {
-    try {
-        $sql = "DELETE FROM users WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['id' => $id]);
-        
-        // Verifica se alguma linha foi afetada
-        if ($stmt->rowCount() > 0) {
-            $_SESSION['alert'] = [
-                'type' => 'success',
-                'message' => 'Usuário removido com sucesso!'
-            ];
-            return true;
-        } else {
-            $_SESSION['alert'] = [
-                'type' => 'error',
-                'message' => 'Usuário não encontrado!'
+
+    // Delet
+    public function delete($id) {
+        try {
+            $sql = "DELETE FROM users WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            if ($stmt->rowCount() > 0) {
+                $_SESSION['alert'] = ['type' => 'success','message' => 'Usuário removido com sucesso!'];
+                return true;
+            } else {$_SESSION['alert'] = ['type' => 'error','message' => 'Usuário não encontrado!'
+                ];
+                return false;
+            }
+        } catch (PDOException $e) {$_SESSION['alert'] = ['type' => 'error','message' => 'Erro ao remover usuário: ' . $e->getMessage()
             ];
             return false;
         }
-    } catch (PDOException $e) {
-        $_SESSION['alert'] = [
-            'type' => 'error',
-            'message' => 'Erro ao remover usuário: ' . $e->getMessage()
-        ];
-        return false;
-    }
 }
 }
