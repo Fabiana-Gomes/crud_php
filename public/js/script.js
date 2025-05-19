@@ -1,11 +1,11 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Abrir Modal
     const editButtons = document.querySelectorAll('.edit-btn');
     const editModal = document.getElementById('editModal');
     const closeModal = document.querySelector('.close-modal');
 
     editButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const userId = this.getAttribute('data-id');
             const userName = this.getAttribute('data-name');
             const userEmail = this.getAttribute('data-email');
@@ -19,21 +19,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Fechar Modal
-    closeModal.addEventListener('click', function() {
+    closeModal.addEventListener('click', function () {
         editModal.style.display = 'none';
     });
 
-    window.addEventListener('click', function(event) {
-        if(event.target === editModal) {
+    window.addEventListener('click', function (event) {
+        if (event.target === editModal) {
             editModal.style.display = 'none';
         }
     });
 
     // Validação do Formulário de Criação
-    document.getElementById('createForm')?.addEventListener('submit', function(e) {
+    document.getElementById('createForm')?.addEventListener('submit', function (e) {
         const name = document.getElementById('createName').value.trim();
         const email = document.getElementById('createEmail').value.trim();
-        
+
         if (!name || !email) {
             e.preventDefault();
             Swal.fire({
@@ -45,10 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-     document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function(e) {
+    //Modal delete
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             Swal.fire({
                 title: 'Tem certeza?',
                 text: "Você não poderá reverter esta ação!",
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     tempInput.name = 'delete';
                     tempInput.value = '1';
                     form.appendChild(tempInput);
-                    
+
                     form.submit();
                 }
             });
